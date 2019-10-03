@@ -4,7 +4,7 @@ public class QuitOnEscape : MonoBehaviour
 {
     void Update()
     {
-        if (Input.GetKey ("escape"))
+        if (Input.GetButton("Escape"))
         {
             Application.Quit();
         }
