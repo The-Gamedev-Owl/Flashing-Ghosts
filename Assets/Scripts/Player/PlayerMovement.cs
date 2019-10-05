@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
 
-    public float speed;                //Floating point variable to store the player's movement speed.
+    public float speed = 3.0f;                //Floating point variable to store the player's movement speed.
 
     private Rigidbody2D rb2d;        //Store a reference to the Rigidbody2D component required to use 2D Physics.
 
