@@ -7,8 +7,7 @@ namespace UI
     {
         public void OnPlayButtonClicked()
         {
-            // TODO: Update with the actual scene level
-            // SceneManager.LoadScene("Level");
+            SceneManager.LoadScene("Scenes/Level");
         }
 
         public void OnQuitButtonClicked()
