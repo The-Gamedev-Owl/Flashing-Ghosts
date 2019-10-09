@@ -103,9 +103,11 @@ GameObject:
   - component: {fileID: 4739850444083132128}
   - component: {fileID: 4739850444083132134}
   - component: {fileID: 271329106}
-  - component: {fileID: 271329107}
+  - component: {fileID: 5643509855181780156}
   - component: {fileID: 4739850444083132135}
   - component: {fileID: 271329102}
+  - component: {fileID: 271329101}
+  - component: {fileID: 271329105}
   m_Layer: 8
   m_Name: Luigi
   m_TagString: Player
@@ -164,7 +166,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1263122431
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9ba944e02aba96a4aa231a58c00dda11, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -217,8 +219,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &271329107
-BoxCollider2D:
+--- !u!58 &5643509855181780156
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -230,19 +232,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.45, y: 1.7}
-    newSize: {x: 1.45, y: 1.7}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: -0.02476871, y: -0.3805102}
   serializedVersion: 2
-  m_Size: {x: 1.44, y: 1.7}
-  m_EdgeRadius: 0
+  m_Radius: 0.6482202
 --- !u!114 &4739850444083132135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +264,33 @@ MonoBehaviour:
   maxCameraZoom: 2.5
   invincibleTime: 3
   flashingInvincibleRate: 0.2
+--- !u!114 &271329101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4739850444083132131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2740611c693960c4c9bdd658cbf0ee76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
+--- !u!114 &271329105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4739850444083132131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d0c229b94b8a334bb4c4c05291c5f3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifes: 3
+  lifePointsUI: {fileID: 0}
 --- !u!1 &4739850444352626251
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,13 +22,13 @@ public class ChangeDirection : MonoBehaviour
         }
     }
 
-    public void SetIsScared(bool newValue)
+    public void SetIsScared(bool newIsScared)
     {
-        if (newValue)
+        if (newIsScared)
             lights.SetActive(false); // Disable flashlight when scared
-        else if (!newValue)
+        else if (!newIsScared)
             lights.SetActive(true);
-        isScared = newValue;
+        isScared = newIsScared;
     }
 
     private void RotatePlayer()
