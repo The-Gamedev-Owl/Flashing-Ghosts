@@ -2,19 +2,33 @@
 
 public class ChangeDirection : MonoBehaviour
 {
-    private Animator animator;
+    private bool isScared;
     private GameObject lights;
+    private Animator animator;
 
     private void Start()
     {
+        isScared = false;
         animator = GetComponent<Animator>();
         lights = transform.GetChild(0).gameObject;
     }
 
     void Update()
     {
-        RotateLights();
-        RotatePlayer();
+        if (!isScared)
+        {
+            RotateLights();
+            RotatePlayer();
+        }
+    }
+
+    public void SetIsScared(bool newIsScared)
+    {
+        if (newIsScared)
+            lights.SetActive(false); // Disable flashlight when scared
+        else if (!newIsScared)
+            lights.SetActive(true);
+        isScared = newIsScared;
     }
 
     private void RotatePlayer()
