@@ -44,6 +44,9 @@ TagManager:
   - name: Background
     uniqueID: 600502019
     locked: 0
+  - name: Decorations
+    uniqueID: 3959174205
+    locked: 0
   - name: Player
     uniqueID: 1263122431
     locked: 0
