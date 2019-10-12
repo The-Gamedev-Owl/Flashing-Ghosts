@@ -5229,12 +5229,12 @@ PrefabInstance:
     - target: {fileID: 4739850444083132129, guid: d976142e24b333948983e4578c3faaaf,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4739850444083132129, guid: d976142e24b333948983e4578c3faaaf,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.98
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4739850444083132129, guid: d976142e24b333948983e4578c3faaaf,
         type: 3}
@@ -9233,15 +9233,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 472539403691811863, guid: 3f0c0f7b00c57534880f6910801bfeff,
+        type: 3}
+      propertyPath: m_Name
+      value: Boo
+      objectReference: {fileID: 0}
+    - target: {fileID: 472539403691811863, guid: 3f0c0f7b00c57534880f6910801bfeff,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 472539403691811857, guid: 3f0c0f7b00c57534880f6910801bfeff,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.82
+      value: -3.45
       objectReference: {fileID: 0}
     - target: {fileID: 472539403691811857, guid: 3f0c0f7b00c57534880f6910801bfeff,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.32
+      value: -0.52
       objectReference: {fileID: 0}
     - target: {fileID: 472539403691811857, guid: 3f0c0f7b00c57534880f6910801bfeff,
         type: 3}
@@ -9291,17 +9301,32 @@ PrefabInstance:
     - target: {fileID: 472539403691811858, guid: 3f0c0f7b00c57534880f6910801bfeff,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.45
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 472539403691811858, guid: 3f0c0f7b00c57534880f6910801bfeff,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 1.15
+      value: 1.1
       objectReference: {fileID: 0}
-    - target: {fileID: 472539403691811863, guid: 3f0c0f7b00c57534880f6910801bfeff,
+    - target: {fileID: 472539403691811858, guid: 3f0c0f7b00c57534880f6910801bfeff,
         type: 3}
-      propertyPath: m_Name
-      value: Boo
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 472539403691811856, guid: 3f0c0f7b00c57534880f6910801bfeff,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e9510e39d0aad69458e1fb9cf352a275, type: 2}
+    - target: {fileID: 472539403691811856, guid: 3f0c0f7b00c57534880f6910801bfeff,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1263122431
+      objectReference: {fileID: 0}
+    - target: {fileID: 472539403691811856, guid: 3f0c0f7b00c57534880f6910801bfeff,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f0c0f7b00c57534880f6910801bfeff, type: 3}
