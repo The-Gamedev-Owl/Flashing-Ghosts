@@ -9,6 +9,7 @@ public class Flashlight : MonoBehaviour
     private bool isScared;
     private bool isFlashing;
     private Animator animator;
+    private Rigidbody2D rigidBody;
 
     /* Lights */
     public float maxConeLightIntensity;
@@ -24,6 +25,7 @@ public class Flashlight : MonoBehaviour
         isScared = false;
         isFlashing = false;
         animator = GetComponent<Animator>();
+        rigidBody = GetComponent<Rigidbody2D>();
         lightsGO = transform.GetChild(0).gameObject;
         coneLight = lightsGO.transform.GetChild(0).GetComponent<Light>();
         spotLight = lightsGO.transform.GetChild(1).GetComponent<Light>();
@@ -50,23 +52,19 @@ public class Flashlight : MonoBehaviour
         //// Disable movement
         //// Play light load up sound
         yield return new WaitForSeconds(0.5f);
-        StartCoroutine(PlayerKnockBack()); // Push player opposite from mouse (flash knockback)
+        PlayerKnockBack(); // Push player opposite from mouse (flash knockback)
         coneLight.intensity = maxConeLightIntensity;
         spotLight.intensity = maxSpotLightIntensity;
         KillGhostsInRange(); // Kill ghosts in flashlight range
         StartCoroutine(DecreaseLightsIntensity(coneLightNormalIntensity, spotLightNormalIntensity));
     }
 
-    private IEnumerator PlayerKnockBack()
+    private void PlayerKnockBack()
     {
         Vector2 finalKnockbackPoint = GetPointRelativeToLightsRotation(false, flashKnockbackForce);
-        Vector3 newPos = new Vector3(finalKnockbackPoint.x, finalKnockbackPoint.y, transform.position.z);
+        Vector2 actualPos = new Vector2(transform.position.x, transform.position.y);
 
-        while (Vector3.Distance(transform.position, newPos) > 1f)
-        {
-            transform.position = Vector3.Lerp(transform.position, newPos, Time.deltaTime * flashKnockbackSpeed);
-            yield return new WaitForSeconds(0f);
-        }
+        rigidBody.AddForce((finalKnockbackPoint - actualPos) * flashKnockbackForce);
     }
 
     private void KillGhostsInRange()
