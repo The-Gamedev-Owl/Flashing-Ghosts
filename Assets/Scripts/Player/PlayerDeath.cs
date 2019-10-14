@@ -8,19 +8,22 @@ public class PlayerDeath : MonoBehaviour
     /* Camera Zoom */
     public float minCameraZoom;
     public float maxCameraZoom;
+    public float cameraZoomSpeed;
     /* Invincible */
     public float invincibleTime;
     public float flashingInvincibleRate; // Should be lower than 'invincibleTime'
+
     private bool isInvincible;
 
+
     private Animator animator;
-    private ChangeDirection directionManager;
+    private Flashlight flashlightManager;
     private PlayerInventory playerInventory;
 
     private void Start()
     {
         isInvincible = false;
-        directionManager = GetComponent<ChangeDirection>();
+        flashlightManager = GetComponent<Flashlight>();
         animator = GetComponent<Animator>();
         playerInventory = GetComponent<PlayerInventory>();
     }
@@ -30,9 +33,9 @@ public class PlayerDeath : MonoBehaviour
         if (!isInvincible && collision.CompareTag("Enemy"))
         {
             AnimatorSetBool("Scared");
-            directionManager.SetIsScared(true); // Disable flashlight control
+            flashlightManager.SetIsScared(true); // Disable flashlight control
             playerInventory.LooseHP(1);
-            //// Should be immobile when scared
+            //// Disable movement when scared
             isInvincible = true;
             StartCoroutine(ZoomInCameraToPlayer(maxCameraZoom)); // Zoom camera to player
             if (playerInventory.lifes > 0)
@@ -47,7 +50,7 @@ public class PlayerDeath : MonoBehaviour
     {
         yield return new WaitForSeconds(scaredTime); // Wait for player not to be scared again
         AnimatorSetBool("Left");
-        directionManager.SetIsScared(false); // Enable flashlight control
+        flashlightManager.SetIsScared(false); // Enable flashlight control
         StartCoroutine(ZoomOutCamera()); // Zoom out camera to default position and zooms
         StartCoroutine(Invincible()); // Flash Sprite when player is invincible
     }
@@ -61,8 +64,8 @@ public class PlayerDeath : MonoBehaviour
         {
             playerPosition = transform.position;
             playerPosition.z = Camera.main.transform.position.z;
-            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, playerPosition, Time.deltaTime * 2f);
-            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, orthographicSize, Time.deltaTime * 2f);
+            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, playerPosition, Time.deltaTime * cameraZoomSpeed);
+            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, orthographicSize, Time.deltaTime * cameraZoomSpeed);
             yield return new WaitForSeconds(0f);
         }
     }
@@ -75,8 +78,8 @@ public class PlayerDeath : MonoBehaviour
         zeroPos.z = Camera.main.transform.position.z;
         while (Time.time < timeGoal)
         {
-            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, zeroPos, Time.deltaTime * 2f);
-            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, minCameraZoom, Time.deltaTime * 2f);
+            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, zeroPos, Time.deltaTime * cameraZoomSpeed);
+            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, minCameraZoom, Time.deltaTime * cameraZoomSpeed);
             yield return new WaitForSeconds(0f);
         }
         Camera.main.transform.position = new Vector3(0f, 0f, zeroPos.z);

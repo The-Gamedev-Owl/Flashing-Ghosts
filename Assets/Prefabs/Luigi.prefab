@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4739850443346055247}
   - component: {fileID: 4739850443346055244}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Flashlight emission
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 279
+    m_Bits: 791
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 271329102}
   - component: {fileID: 271329101}
   - component: {fileID: 271329105}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Luigi
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -210,14 +210,14 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.003
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &5643509855181780156
 CircleCollider2D:
@@ -247,6 +247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e84828023f15b14e8c818f3d2f5665c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flashKnockbackForce: 2
+  flashKnockbackSpeed: 3
+  maxConeLightIntensity: 1000
+  maxSpotLightIntensity: 8
 --- !u!114 &271329102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +266,7 @@ MonoBehaviour:
   scaredTime: 3
   minCameraZoom: 7.5
   maxCameraZoom: 2.5
+  cameraZoomSpeed: 2
   invincibleTime: 3
   flashingInvincibleRate: 0.2
 --- !u!114 &271329101
@@ -300,7 +305,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4739850444352626248}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Lights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,7 +338,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4739850444485910264}
   - component: {fileID: 4739850444485910265}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cone Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -402,7 +407,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 23
+    m_Bits: 279
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
