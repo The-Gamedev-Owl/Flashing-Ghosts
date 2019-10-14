@@ -16,8 +16,6 @@ public class Spawner : MonoBehaviour
     public void Start()
     {
         timer = spawnWait;
-        spawnInterval *= 1000f;
-        spawnWait *= 1000f;
     }
 
     public void Update()
