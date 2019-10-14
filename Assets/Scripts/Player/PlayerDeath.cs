@@ -32,6 +32,7 @@ public class PlayerDeath : MonoBehaviour
             AnimatorSetBool("Scared");
             directionManager.SetIsScared(true); // Disable flashlight control
             playerInventory.LooseHP(1);
+            Destroy(collision.gameObject);
             //// Should be immobile when scared
             isInvincible = true;
             StartCoroutine(ZoomInCameraToPlayer(maxCameraZoom)); // Zoom camera to player
