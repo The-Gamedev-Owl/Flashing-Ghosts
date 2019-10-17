@@ -9,4 +9,14 @@ public class GameOver : MonoBehaviour
     {
         SceneManager.LoadScene("Level", LoadSceneMode.Single);
     }
+
+    public void BackToMain()
+    {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
