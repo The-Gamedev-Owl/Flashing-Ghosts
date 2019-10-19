@@ -8,7 +8,6 @@ public class Flashlight : MonoBehaviour
 
     private bool isScared;
     private bool isFlashing;
-    private Animator animator;
     private Rigidbody2D rigidBody;
 
     /* Lights */
@@ -24,7 +23,6 @@ public class Flashlight : MonoBehaviour
     {
         isScared = false;
         isFlashing = false;
-        animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         lightsGO = transform.GetChild(0).gameObject;
         coneLight = lightsGO.transform.GetChild(0).GetComponent<Light>();
@@ -38,7 +36,6 @@ public class Flashlight : MonoBehaviour
             if (!isFlashing && Input.GetMouseButtonDown(0))
                 StartCoroutine(Flash());
             RotateLights();
-            RotatePlayer();
         }
     }
 
@@ -124,29 +121,6 @@ public class Flashlight : MonoBehaviour
         else if (!newIsScared)
             lightsGO.SetActive(true);
         isScared = newIsScared;
-    }
-
-    private void RotatePlayer()
-    {
-        float lightsRotation = lightsGO.transform.eulerAngles.z;
-
-        if (lightsRotation <= 45 || lightsRotation > 315)
-            SetDirectionInAnimator("Left");
-        else if (lightsRotation > 45 && lightsRotation <= 135)
-            SetDirectionInAnimator("Down");
-        else if (lightsRotation > 135 && lightsRotation <= 225)
-            SetDirectionInAnimator("Right");
-        else if (lightsRotation > 225 && lightsRotation <= 315)
-            SetDirectionInAnimator("Up");
-    }
-
-    private void SetDirectionInAnimator(string direction)
-    {
-        foreach (AnimatorControllerParameter parameter in animator.parameters)
-        {
-            animator.SetBool(parameter.name, false);
-        }
-        animator.SetBool(direction, true);
     }
 
     private void RotateLights()

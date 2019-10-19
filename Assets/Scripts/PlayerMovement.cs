@@ -3,30 +3,62 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
 
-    public float speed = 3.0f;                //Floating point variable to store the player's movement speed.
+    public float speed = 3.0f;
 
-    private Rigidbody2D rb2d;        //Store a reference to the Rigidbody2D component required to use 2D Physics.
+    private Rigidbody2D rb2d;
+    private Animator animator;
+    private GameObject lightsGO;
+    private bool isIdle;
 
-    // Use this for initialization
     void Start()
     {
-        //Get and store a reference to the Rigidbody2D component so that we can access it.
         rb2d = GetComponent<Rigidbody2D> ();
+        animator = GetComponent<Animator>();
+        lightsGO = transform.GetChild(0).gameObject;
+        isIdle = false;
     }
 
-    //FixedUpdate is called at a fixed interval and is independent of frame rate. Put physics code here.
+    private void Update()
+    {
+        RotatePlayer();
+        if (!isIdle && Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+        {
+            isIdle = true;
+            animator.Play(animator.GetCurrentAnimatorStateInfo(0).fullPathHash, 0, 0.3f);
+        }
+        else
+            isIdle = false;
+    }
+
     void FixedUpdate()
     {
-        //Store the current horizontal input in the float moveHorizontal.
-        float moveHorizontal = Input.GetAxis ("Horizontal");
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
 
-        //Store the current vertical input in the float moveVertical.
-        float moveVertical = Input.GetAxis ("Vertical");
-
-        //Use the two store floats to create a new Vector2 variable movement.
         Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
-
-        //Call the AddForce function of our Rigidbody2D rb2d supplying movement multiplied by speed to move our player.
         rb2d.velocity = movement * speed;
+    }
+
+    private void RotatePlayer()
+    {
+        float lightsRotation = lightsGO.transform.eulerAngles.z;
+
+        if (lightsRotation <= 45 || lightsRotation > 315)
+            SetDirectionInAnimator("Left");
+        else if (lightsRotation > 45 && lightsRotation <= 135)
+            SetDirectionInAnimator("Down");
+        else if (lightsRotation > 135 && lightsRotation <= 225)
+            SetDirectionInAnimator("Right");
+        else if (lightsRotation > 225 && lightsRotation <= 315)
+            SetDirectionInAnimator("Up");
+    }
+
+    private void SetDirectionInAnimator(string direction)
+    {
+        foreach (AnimatorControllerParameter parameter in animator.parameters)
+        {
+            animator.SetBool(parameter.name, false);
+        }
+        animator.SetBool(direction, true);
     }
 }
