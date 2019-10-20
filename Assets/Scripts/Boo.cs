@@ -24,7 +24,7 @@ public class Boo : MonoBehaviour
     private void FixedUpdate()
     {
         transform.position = Vector3.MoveTowards(transform.position, player.position, speed);
-        sr.flipX = transform.position.y > player.position.y;
+        //sr.flipX = transform.position.y > player.position.y;
     }
 
     public void KillBoo()
