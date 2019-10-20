@@ -71,7 +71,11 @@ public class Flashlight : MonoBehaviour
         foreach (Collider2D ghost in ghostsInRange)
         {
             if (ghost != null)
-                Destroy(ghost.gameObject); //// Should call a ghost method for it to die (animation and all)
+            {
+                var boo = ghost.gameObject.GetComponent<Boo>();
+                if (boo)
+                    boo.KillBoo();
+            }
         }
     }
 
