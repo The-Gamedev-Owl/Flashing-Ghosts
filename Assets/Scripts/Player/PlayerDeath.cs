@@ -19,6 +19,7 @@ public class PlayerDeath : MonoBehaviour
     private Animator animator;
     private Flashlight flashlightManager;
     private PlayerInventory playerInventory;
+    private PlayerMovement playerMovement;
 
     private void Start()
     {
@@ -26,22 +27,23 @@ public class PlayerDeath : MonoBehaviour
         flashlightManager = GetComponent<Flashlight>();
         animator = GetComponent<Animator>();
         playerInventory = GetComponent<PlayerInventory>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (!isInvincible && collision.CompareTag("Enemy"))
         {
-            AnimatorSetBool("Scared");
             flashlightManager.SetIsScared(true); // Disable flashlight control
+            playerMovement.SetIsScared(true); // Disable movement
+            AnimatorSetBool("Scared");
             playerInventory.LooseHP(1);
-            Destroy(collision.gameObject);
-            //// Disable movement when scared
+            collision.GetComponent<Enemy>().AttackPlayer();
             isInvincible = true;
             StartCoroutine(ZoomInCameraToPlayer(maxCameraZoom)); // Zoom camera to player
             if (playerInventory.lifes > 0)
             {
-                //// Touching ghost should disapear + Nearest ghosts should be backed away to allow the player to see animation and not being touched right away
+                //// Nearest ghosts should back away to allow the player to see animation and not being touched right away
                 StartCoroutine(ScaredTimer()); // Exit "Scared" mode after 'scaredTime'
             }
         }
@@ -52,6 +54,7 @@ public class PlayerDeath : MonoBehaviour
         yield return new WaitForSeconds(scaredTime); // Wait for player not to be scared again
         AnimatorSetBool("Left");
         flashlightManager.SetIsScared(false); // Enable flashlight control
+        playerMovement.SetIsScared(false); // Enable movements
         StartCoroutine(ZoomOutCamera()); // Zoom out camera to default position and zooms
         StartCoroutine(Invincible()); // Flash Sprite when player is invincible
     }

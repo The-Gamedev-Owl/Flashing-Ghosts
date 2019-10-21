@@ -45,7 +45,6 @@ public class Flashlight : MonoBehaviour
         float spotLightNormalIntensity = spotLight.intensity;
 
         isFlashing = true;
-        //// Idle animation
         //// Disable movement
         //// Play light load up sound
         yield return new WaitForSeconds(0.5f);
@@ -72,7 +71,7 @@ public class Flashlight : MonoBehaviour
         {
             if (ghost != null)
             {
-                var boo = ghost.gameObject.GetComponent<Boo>();
+                var boo = ghost.gameObject.GetComponent<Enemy>();
                 if (boo)
                     boo.KillBoo();
             }
