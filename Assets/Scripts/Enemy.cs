@@ -10,10 +10,15 @@ public class Enemy : MonoBehaviour
     [Tooltip("Coin to drop on death")]
     public GameObject coin;
 
+    /* Sounds */
+    public AudioClip attackSound;
+    public AudioClip deathSound;
+
     private Transform player;
     private SpriteRenderer sr;
     private Animator animator;
     private BoxCollider2D booCollider;
+    private AudioSource audioSource;
 
     private float angleTowardPlayer;
     private bool isAttacking;
@@ -25,6 +30,7 @@ public class Enemy : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         booCollider = GetComponent<BoxCollider2D>();
+        audioSource = GetComponent<AudioSource>();
         isAttacking = false;
     }
 
@@ -33,7 +39,6 @@ public class Enemy : MonoBehaviour
         if (!isAttacking)
         {
             angleTowardPlayer = GetAngleTowardPlayer();
-            print(angleTowardPlayer);
             PlayMovementAnimation();
         }
     }
@@ -81,6 +86,8 @@ public class Enemy : MonoBehaviour
 
     public void AttackPlayer()
     {
+        audioSource.clip = attackSound;
+        audioSource.Play();
         if ((angleTowardPlayer > 90 && angleTowardPlayer <= 180) || (angleTowardPlayer >= -180 && angleTowardPlayer <= -90))
             SetBoolInAnimator("AttackRight");
         else
@@ -88,8 +95,13 @@ public class Enemy : MonoBehaviour
         isAttacking = true;
     }
 
-    public void KillBoo()
+    public void KillBoo(bool shouldPlayDeathSound)
     {
+        if (shouldPlayDeathSound)
+        {
+            audioSource.clip = deathSound;
+            audioSource.Play();
+        }
         Instantiate(coin, transform.position, coin.transform.rotation);
         if ((angleTowardPlayer > 90 && angleTowardPlayer <= 180) || (angleTowardPlayer >= -180 && angleTowardPlayer <= -90))
             SetBoolInAnimator("HitRight");
