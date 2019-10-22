@@ -66,6 +66,7 @@ public class Flashlight : MonoBehaviour
     private void KillGhostsInRange()
     {
         Collider2D[] ghostsInRange = GetEnemiesInRange(); // Get ghosts in flashlight range
+        bool shouldPlayDeathSound = true;
 
         foreach (Collider2D ghost in ghostsInRange)
         {
@@ -73,7 +74,10 @@ public class Flashlight : MonoBehaviour
             {
                 var boo = ghost.gameObject.GetComponent<Enemy>();
                 if (boo)
-                    boo.KillBoo();
+                {
+                    boo.KillBoo(shouldPlayDeathSound);
+                    shouldPlayDeathSound = false;
+                }
             }
         }
     }
