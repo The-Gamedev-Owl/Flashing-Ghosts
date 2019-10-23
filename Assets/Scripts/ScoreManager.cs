@@ -10,7 +10,6 @@ public class ScoreManager : MonoBehaviour
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
         score = 0;
     }
 
@@ -18,10 +17,5 @@ public class ScoreManager : MonoBehaviour
     {
         score++;
         scoreText.text = "Your score: " + score;
-    }
-
-    public void Destroy()
-    {
-        Destroy(gameObject);
     }
 }
