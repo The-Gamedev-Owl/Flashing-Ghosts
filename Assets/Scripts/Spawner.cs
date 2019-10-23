@@ -13,8 +13,8 @@ public class Spawner : MonoBehaviour
 
     public Node node;
 
+    private float speed = 0.05f;
     private const float maxDistDetect = 1f;
-    private const float speed = 0.05f;
 
     private float timer;
 
@@ -29,6 +29,8 @@ public class Spawner : MonoBehaviour
         if (timer < 0f)
         {
             Instantiate(toSpawn, transform.position, Quaternion.identity);
+            spawnInterval -= .1f;
+            speed += .01f;
             timer = spawnInterval;
         }
     }
