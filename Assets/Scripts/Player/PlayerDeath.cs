@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerDeath : MonoBehaviour
 {
+    public AudioClip[] scaredSounds;
+    public AudioClip[] deathSounds;
     public float scaredTime;
     /* Camera Zoom */
     public float minCameraZoom;
@@ -20,6 +22,7 @@ public class PlayerDeath : MonoBehaviour
     private Flashlight flashlightManager;
     private PlayerInventory playerInventory;
     private PlayerMovement playerMovement;
+    private AudioSource audioSource;
 
     private void Start()
     {
@@ -28,6 +31,7 @@ public class PlayerDeath : MonoBehaviour
         animator = GetComponent<Animator>();
         playerInventory = GetComponent<PlayerInventory>();
         playerMovement = GetComponent<PlayerMovement>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -46,11 +50,18 @@ public class PlayerDeath : MonoBehaviour
                 //// Nearest ghosts should back away to allow the player to see animation and not being touched right away
                 StartCoroutine(ScaredTimer()); // Exit "Scared" mode after 'scaredTime'
             }
+            else
+            {
+                audioSource.clip = deathSounds[Random.Range(0, deathSounds.Length)]; // Play a random sound from death sounds
+                audioSource.Play();
+            }
         }
     }
 
     private IEnumerator ScaredTimer()
     {
+        audioSource.clip = scaredSounds[Random.Range(0, scaredSounds.Length)]; // Play a random sound from scared sounds
+        audioSource.Play();
         yield return new WaitForSeconds(scaredTime); // Wait for player not to be scared again
         AnimatorSetBool("Left");
         flashlightManager.SetIsScared(false); // Enable flashlight control
