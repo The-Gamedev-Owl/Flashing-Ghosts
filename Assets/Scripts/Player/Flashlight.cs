@@ -5,10 +5,12 @@ public class Flashlight : MonoBehaviour
 {
     public float flashKnockbackForce;
     public float flashKnockbackSpeed;
+    public AudioClip flashlightSound;
 
     private bool isScared;
     private bool isFlashing;
     private Rigidbody2D rigidBody;
+    private AudioSource audioSource;
 
     /* Lights */
     public float maxConeLightIntensity;
@@ -27,6 +29,7 @@ public class Flashlight : MonoBehaviour
         lightsGO = transform.GetChild(0).gameObject;
         coneLight = lightsGO.transform.GetChild(0).GetComponent<Light>();
         spotLight = lightsGO.transform.GetChild(1).GetComponent<Light>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -44,8 +47,9 @@ public class Flashlight : MonoBehaviour
         float coneLightNormalIntensity = coneLight.intensity;
         float spotLightNormalIntensity = spotLight.intensity;
 
+        audioSource.clip = flashlightSound;
+        audioSource.Play();
         isFlashing = true;
-        //// Idle animation
         //// Disable movement
         //// Play light load up sound
         yield return new WaitForSeconds(0.5f);
@@ -67,14 +71,18 @@ public class Flashlight : MonoBehaviour
     private void KillGhostsInRange()
     {
         Collider2D[] ghostsInRange = GetEnemiesInRange(); // Get ghosts in flashlight range
+        bool shouldPlayDeathSound = true;
 
         foreach (Collider2D ghost in ghostsInRange)
         {
             if (ghost != null)
             {
-                var boo = ghost.gameObject.GetComponent<Boo>();
+                var boo = ghost.gameObject.GetComponent<Enemy>();
                 if (boo)
-                    boo.KillBoo();
+                {
+                    boo.KillBoo(shouldPlayDeathSound);
+                    shouldPlayDeathSound = false;
+                }
             }
         }
     }

@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour {
     private Animator animator;
     private GameObject lightsGO;
     private bool isIdle;
+    private bool isScared;
 
     void Start()
     {
@@ -16,27 +17,38 @@ public class PlayerMovement : MonoBehaviour {
         animator = GetComponent<Animator>();
         lightsGO = transform.GetChild(0).gameObject;
         isIdle = false;
+        isScared = false;
     }
 
     private void Update()
     {
-        RotatePlayer();
-        if (!isIdle && Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+        if (!isScared)
         {
-            isIdle = true;
-            animator.Play(animator.GetCurrentAnimatorStateInfo(0).fullPathHash, 0, 0.3f);
+            RotatePlayer();
+            if (!isIdle && Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+            {
+                isIdle = true;
+                animator.Play(animator.GetCurrentAnimatorStateInfo(0).fullPathHash, 0, 0.3f);
+            }
+            else if (isIdle)
+                isIdle = false;
         }
-        else
-            isIdle = false;
     }
 
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        float moveHorizontal;
+        float moveVertical;
 
-        Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
-        rb2d.velocity = movement * speed;
+        if (!isScared)
+        {
+            moveHorizontal = Input.GetAxis("Horizontal");
+            moveVertical = Input.GetAxis("Vertical");
+            Vector2 movement = new Vector2(moveHorizontal, moveVertical);
+            rb2d.velocity = movement * speed;
+        }
+        else
+            rb2d.velocity = Vector2.zero;
     }
 
     private void RotatePlayer()
@@ -60,5 +72,10 @@ public class PlayerMovement : MonoBehaviour {
             animator.SetBool(parameter.name, false);
         }
         animator.SetBool(direction, true);
+    }
+
+    public void SetIsScared(bool newIsScared)
+    {
+        isScared = newIsScared;
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerDeath : MonoBehaviour
 {
+    public AudioClip[] scaredSounds;
+    public AudioClip[] deathSounds;
     public float scaredTime;
     /* Camera Zoom */
     public float minCameraZoom;
@@ -19,6 +21,8 @@ public class PlayerDeath : MonoBehaviour
     private Animator animator;
     private Flashlight flashlightManager;
     private PlayerInventory playerInventory;
+    private PlayerMovement playerMovement;
+    private AudioSource audioSource;
 
     private void Start()
     {
@@ -26,32 +30,42 @@ public class PlayerDeath : MonoBehaviour
         flashlightManager = GetComponent<Flashlight>();
         animator = GetComponent<Animator>();
         playerInventory = GetComponent<PlayerInventory>();
+        playerMovement = GetComponent<PlayerMovement>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (!isInvincible && collision.CompareTag("Enemy"))
         {
-            AnimatorSetBool("Scared");
             flashlightManager.SetIsScared(true); // Disable flashlight control
+            playerMovement.SetIsScared(true); // Disable movement
+            AnimatorSetBool("Scared");
             playerInventory.LooseHP(1);
-            Destroy(collision.gameObject);
-            //// Disable movement when scared
+            collision.GetComponent<Enemy>().AttackPlayer();
             isInvincible = true;
             StartCoroutine(ZoomInCameraToPlayer(maxCameraZoom)); // Zoom camera to player
             if (playerInventory.lifes > 0)
             {
-                //// Touching ghost should disapear + Nearest ghosts should be backed away to allow the player to see animation and not being touched right away
+                //// Nearest ghosts should back away to allow the player to see animation and not being touched right away
                 StartCoroutine(ScaredTimer()); // Exit "Scared" mode after 'scaredTime'
+            }
+            else
+            {
+                audioSource.clip = deathSounds[Random.Range(0, deathSounds.Length)]; // Play a random sound from death sounds
+                audioSource.Play();
             }
         }
     }
 
     private IEnumerator ScaredTimer()
     {
+        audioSource.clip = scaredSounds[Random.Range(0, scaredSounds.Length)]; // Play a random sound from scared sounds
+        audioSource.Play();
         yield return new WaitForSeconds(scaredTime); // Wait for player not to be scared again
         AnimatorSetBool("Left");
         flashlightManager.SetIsScared(false); // Enable flashlight control
+        playerMovement.SetIsScared(false); // Enable movements
         StartCoroutine(ZoomOutCamera()); // Zoom out camera to default position and zooms
         StartCoroutine(Invincible()); // Flash Sprite when player is invincible
     }
