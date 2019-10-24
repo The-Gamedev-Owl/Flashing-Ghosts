@@ -21,6 +21,8 @@ public class Flashlight : MonoBehaviour
     private Light spotLight;
     /* Lights */
 
+    private const int layersDetected = (1 << 8) | (1 << 10); // Only detect layer 8 (Enemy) and 10 (Wall)
+
     private void Start()
     {
         isScared = false;
@@ -78,7 +80,9 @@ public class Flashlight : MonoBehaviour
             if (ghost != null)
             {
                 var boo = ghost.gameObject.GetComponent<Enemy>();
-                if (boo)
+                RaycastHit2D hit = Physics2D.Linecast(coneLight.transform.position, boo.transform.position, layersDetected);
+
+                if (boo && hit.collider && hit.collider.CompareTag("Enemy"))
                 {
                     boo.KillBoo(shouldPlayDeathSound);
                     shouldPlayDeathSound = false;
