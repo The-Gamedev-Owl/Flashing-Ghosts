@@ -959,6 +959,7 @@ GameObject:
   - component: {fileID: 154574521}
   - component: {fileID: 154574520}
   - component: {fileID: 154574519}
+  - component: {fileID: 154574523}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -1039,6 +1040,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &154574523
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154574518}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 1
 --- !u!1 &233210940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1336,9 +1353,9 @@ GameObject:
   - component: {fileID: 536895221}
   - component: {fileID: 536895225}
   - component: {fileID: 536895224}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tilemap-Wall-Background
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5818,12 +5835,12 @@ PrefabInstance:
     - target: {fileID: 4739850444083132129, guid: d976142e24b333948983e4578c3faaaf,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -4.56
       objectReference: {fileID: 0}
     - target: {fileID: 4739850444083132129, guid: d976142e24b333948983e4578c3faaaf,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.94
       objectReference: {fileID: 0}
     - target: {fileID: 4739850444083132129, guid: d976142e24b333948983e4578c3faaaf,
         type: 3}
@@ -9831,12 +9848,12 @@ PrefabInstance:
     - target: {fileID: 472539403691811857, guid: 3f0c0f7b00c57534880f6910801bfeff,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.45
+      value: -10.18
       objectReference: {fileID: 0}
     - target: {fileID: 472539403691811857, guid: 3f0c0f7b00c57534880f6910801bfeff,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.41
+      value: -1.69
       objectReference: {fileID: 0}
     - target: {fileID: 472539403691811857, guid: 3f0c0f7b00c57534880f6910801bfeff,
         type: 3}
