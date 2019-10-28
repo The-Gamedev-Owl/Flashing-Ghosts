@@ -6827,6 +6827,11 @@ PrefabInstance:
       propertyPath: lifePointsUI
       value: 
       objectReference: {fileID: 609582117}
+    - target: {fileID: 4739850444485910265, guid: d976142e24b333948983e4578c3faaaf,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 1303
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d976142e24b333948983e4578c3faaaf, type: 3}
 --- !u!1 &2024164262
