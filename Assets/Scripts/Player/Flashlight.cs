@@ -5,11 +5,12 @@ public class Flashlight : MonoBehaviour
 {
     public float flashKnockbackForce;
     public float flashKnockbackSpeed;
+    public AudioClip flashlightSound;
 
     private bool isScared;
     private bool isFlashing;
-    private Animator animator;
     private Rigidbody2D rigidBody;
+    private AudioSource audioSource;
 
     /* Lights */
     public float maxConeLightIntensity;
@@ -20,15 +21,17 @@ public class Flashlight : MonoBehaviour
     private Light spotLight;
     /* Lights */
 
+    private const int layersDetected = (1 << 8) | (1 << 10); // Only detect layer 8 (Enemy) and 10 (Wall)
+
     private void Start()
     {
         isScared = false;
         isFlashing = false;
-        animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         lightsGO = transform.GetChild(0).gameObject;
         coneLight = lightsGO.transform.GetChild(0).GetComponent<Light>();
         spotLight = lightsGO.transform.GetChild(1).GetComponent<Light>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -38,7 +41,6 @@ public class Flashlight : MonoBehaviour
             if (!isFlashing && Input.GetMouseButtonDown(0))
                 StartCoroutine(Flash());
             RotateLights();
-            RotatePlayer();
         }
     }
 
@@ -47,8 +49,9 @@ public class Flashlight : MonoBehaviour
         float coneLightNormalIntensity = coneLight.intensity;
         float spotLightNormalIntensity = spotLight.intensity;
 
+        audioSource.clip = flashlightSound;
+        audioSource.Play();
         isFlashing = true;
-        //// Idle animation
         //// Disable movement
         //// Play light load up sound
         yield return new WaitForSeconds(0.5f);
@@ -70,11 +73,21 @@ public class Flashlight : MonoBehaviour
     private void KillGhostsInRange()
     {
         Collider2D[] ghostsInRange = GetEnemiesInRange(); // Get ghosts in flashlight range
+        bool shouldPlayDeathSound = true;
 
         foreach (Collider2D ghost in ghostsInRange)
         {
             if (ghost != null)
-                Destroy(ghost.gameObject); //// Should call a ghost method for it to die (animation and all)
+            {
+                var boo = ghost.gameObject.GetComponent<Enemy>();
+                RaycastHit2D hit = Physics2D.Linecast(coneLight.transform.position, boo.transform.position, layersDetected);
+
+                if (boo && hit.collider && hit.collider.CompareTag("Enemy"))
+                {
+                    boo.KillBoo(shouldPlayDeathSound);
+                    shouldPlayDeathSound = false;
+                }
+            }
         }
     }
 
@@ -124,29 +137,6 @@ public class Flashlight : MonoBehaviour
         else if (!newIsScared)
             lightsGO.SetActive(true);
         isScared = newIsScared;
-    }
-
-    private void RotatePlayer()
-    {
-        float lightsRotation = lightsGO.transform.eulerAngles.z;
-
-        if (lightsRotation <= 45 || lightsRotation > 315)
-            SetDirectionInAnimator("Left");
-        else if (lightsRotation > 45 && lightsRotation <= 135)
-            SetDirectionInAnimator("Down");
-        else if (lightsRotation > 135 && lightsRotation <= 225)
-            SetDirectionInAnimator("Right");
-        else if (lightsRotation > 225 && lightsRotation <= 315)
-            SetDirectionInAnimator("Up");
-    }
-
-    private void SetDirectionInAnimator(string direction)
-    {
-        foreach (AnimatorControllerParameter parameter in animator.parameters)
-        {
-            animator.SetBool(parameter.name, false);
-        }
-        animator.SetBool(direction, true);
     }
 
     private void RotateLights()
