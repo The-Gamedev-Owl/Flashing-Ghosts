@@ -29,7 +29,7 @@ public class Thunderstorm : MonoBehaviour
             }
 
             audioSource.Play();
-            yield return new WaitForSeconds(Mathf.Lerp(10, 20, Random.value));
+            yield return new WaitForSeconds(Mathf.Lerp(5, 10, Random.value));
         }
     }
 }
