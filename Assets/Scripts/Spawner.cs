@@ -11,6 +11,9 @@ public class Spawner : MonoBehaviour
     [Tooltip("Time between each spawn (in s)")]
     public float spawnInterval;
 
+    [Tooltip("Allows spawners to stop when player is dead")]
+    public PlayerDeath playerDeath;
+
     public Node node;
 
     private float speed = 0.05f;
@@ -25,13 +28,16 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
-        timer -= Time.deltaTime;
-        if (timer < 0f)
+        if (!playerDeath.playerIsDead)
         {
-            Instantiate(toSpawn, transform.position, Quaternion.identity);
-            spawnInterval -= .1f;
-            speed += .01f;
-            timer = spawnInterval;
+            timer -= Time.deltaTime;
+            if (timer < 0f)
+            {
+                Instantiate(toSpawn, transform.position, Quaternion.identity);
+                spawnInterval -= .1f;
+                speed += .01f;
+                timer = spawnInterval;
+            }
         }
     }
 
@@ -39,19 +45,22 @@ public class Spawner : MonoBehaviour
     {
         int x = 0, y = 0;
 
-        if (transform.position.x + maxDistDetect < node.transform.position.x)
-            x = 1;
-        else if (transform.position.x - maxDistDetect > node.transform.position.x)
-            x = -1;
+        if (!playerDeath.playerIsDead)
+        {
+            if (transform.position.x + maxDistDetect < node.transform.position.x)
+                x = 1;
+            else if (transform.position.x - maxDistDetect > node.transform.position.x)
+                x = -1;
 
-        if (transform.position.y + maxDistDetect < node.transform.position.y)
-            y = 1;
-        else if (transform.position.y - maxDistDetect > node.transform.position.y)
-            y = -1;
+            if (transform.position.y + maxDistDetect < node.transform.position.y)
+                y = 1;
+            else if (transform.position.y - maxDistDetect > node.transform.position.y)
+                y = -1;
 
-        if (x == 0 && y == 0)
-            node = node.GetNextNode();
-        else
-            transform.Translate(new Vector2(x, y) * speed);
+            if (x == 0 && y == 0)
+                node = node.GetNextNode();
+            else
+                transform.Translate(new Vector2(x, y) * speed);
+        }
     }
 }
