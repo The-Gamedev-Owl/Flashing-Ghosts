@@ -7,6 +7,7 @@ public class PlayerDeath : MonoBehaviour
     public AudioClip[] scaredSounds;
     public AudioClip[] deathSounds;
     public float scaredTime;
+    public bool playerIsDead; // Will allow Boos and spawners to stop when player is dead
     /* Camera Zoom */
     public float minCameraZoom;
     public float maxCameraZoom;
@@ -26,6 +27,7 @@ public class PlayerDeath : MonoBehaviour
 
     private void Start()
     {
+        playerIsDead = false;
         isInvincible = false;
         flashlightManager = GetComponent<Flashlight>();
         animator = GetComponent<Animator>();
@@ -52,6 +54,7 @@ public class PlayerDeath : MonoBehaviour
             }
             else
             {
+                playerIsDead = true;
                 audioSource.clip = deathSounds[Random.Range(0, deathSounds.Length)]; // Play a random sound from death sounds
                 audioSource.Play();
             }
