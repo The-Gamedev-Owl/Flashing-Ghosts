@@ -45,7 +45,7 @@ public class Spawner : MonoBehaviour
     {
         int x = 0, y = 0;
 
-        if (!playerDeath.playerIsDead)
+        if (!playerDeath.playerIsDead && !playerDeath.playerIsScared)
         {
             if (transform.position.x + maxDistDetect < node.transform.position.x)
                 x = 1;
