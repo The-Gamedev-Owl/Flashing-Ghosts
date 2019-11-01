@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!playerDeath.playerIsDead && !isAttacking)
+        if (!playerDeath.playerIsDead && !playerDeath.playerIsScared && !isAttacking)
             transform.position = Vector3.MoveTowards(transform.position, player.position, speed);
     }
     #endregion MonoBehaviour
