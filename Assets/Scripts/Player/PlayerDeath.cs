@@ -7,6 +7,8 @@ public class PlayerDeath : MonoBehaviour
     public AudioClip[] scaredSounds;
     public AudioClip[] deathSounds;
     public float scaredTime;
+    public bool playerIsScared; // Will allow Boos and spawners to pause when player is scared
+    public bool playerIsDead; // Will allow Boos and spawners to stop when player is dead
     /* Camera Zoom */
     public float minCameraZoom;
     public float maxCameraZoom;
@@ -26,6 +28,8 @@ public class PlayerDeath : MonoBehaviour
 
     private void Start()
     {
+        playerIsScared = false;
+        playerIsDead = false;
         isInvincible = false;
         flashlightManager = GetComponent<Flashlight>();
         animator = GetComponent<Animator>();
@@ -38,6 +42,7 @@ public class PlayerDeath : MonoBehaviour
     {
         if (!isInvincible && collision.CompareTag("Enemy"))
         {
+            playerIsScared = true;
             flashlightManager.SetIsScared(true); // Disable flashlight control
             playerMovement.SetIsScared(true); // Disable movement
             AnimatorSetBool("Scared");
@@ -52,6 +57,7 @@ public class PlayerDeath : MonoBehaviour
             }
             else
             {
+                playerIsDead = true;
                 audioSource.clip = deathSounds[Random.Range(0, deathSounds.Length)]; // Play a random sound from death sounds
                 audioSource.Play();
             }
@@ -66,6 +72,7 @@ public class PlayerDeath : MonoBehaviour
         AnimatorSetBool("Left");
         flashlightManager.SetIsScared(false); // Enable flashlight control
         playerMovement.SetIsScared(false); // Enable movements
+        playerIsScared = false;
         StartCoroutine(ZoomOutCamera()); // Zoom out camera to default position and zooms
         StartCoroutine(Invincible()); // Flash Sprite when player is invincible
     }

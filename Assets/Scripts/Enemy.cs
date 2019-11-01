@@ -10,6 +10,9 @@ public class Enemy : MonoBehaviour
     [Tooltip("Coin to drop on death")]
     public GameObject coin;
 
+    [Tooltip("Allows spawners to stop when player is dead")]
+    private PlayerDeath playerDeath;
+
     /* Sounds */
     public AudioClip attackSound;
     public AudioClip deathSound;
@@ -27,6 +30,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerDeath = player.GetComponent<PlayerDeath>();
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         booCollider = GetComponent<BoxCollider2D>();
@@ -36,16 +40,24 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (!isAttacking)
+        if (!playerDeath.playerIsDead && !isAttacking)
         {
             angleTowardPlayer = GetAngleTowardPlayer();
             PlayMovementAnimation();
+        }
+        else if (playerDeath.playerIsDead)
+        {
+            SetBoolInAnimator("None");
+            if ((angleTowardPlayer > 90 && angleTowardPlayer <= 180) || (angleTowardPlayer >= -180 && angleTowardPlayer <= -90))
+                animator.SetTrigger("WinRight");
+            else
+                animator.SetTrigger("WinLeft");
         }
     }
 
     private void FixedUpdate()
     {
-        if (!isAttacking)
+        if (!playerDeath.playerIsDead && !playerDeath.playerIsScared && !isAttacking)
             transform.position = Vector3.MoveTowards(transform.position, player.position, speed);
     }
     #endregion MonoBehaviour

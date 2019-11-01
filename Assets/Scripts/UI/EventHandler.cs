@@ -17,7 +17,7 @@ namespace UI
         {
             transitionAnimator.SetTrigger("AnimateOut");
             yield return new WaitForSeconds(2f);
-            SceneManager.LoadScene("Scenes/Level");
+            SceneManager.LoadScene("Scenes/Intro");
         }
 
         public void OnQuitButtonClicked()

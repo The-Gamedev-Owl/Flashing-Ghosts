@@ -3,8 +3,7 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-    [SerializeField]
-    private Text scoreText;
+    public DisplayScore scoreText;
 
     private int score;
 
@@ -16,6 +15,6 @@ public class ScoreManager : MonoBehaviour
     public void IncreaseScore()
     {
         score++;
-        scoreText.text = "Your score: " + score;
+        scoreText.AddScore(score);
     }
 }

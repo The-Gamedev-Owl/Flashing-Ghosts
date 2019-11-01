@@ -6,6 +6,7 @@ public class Flashlight : MonoBehaviour
     public float flashKnockbackForce;
     public float flashKnockbackSpeed;
     public AudioClip flashlightSound;
+    public Animator flashBarImageAnimator;
 
     private bool isScared;
     private bool isFlashing;
@@ -52,13 +53,12 @@ public class Flashlight : MonoBehaviour
         audioSource.clip = flashlightSound;
         audioSource.Play();
         isFlashing = true;
-        //// Disable movement
-        //// Play light load up sound
         yield return new WaitForSeconds(0.5f);
         PlayerKnockBack(); // Push player opposite from mouse (flash knockback)
         coneLight.intensity = maxConeLightIntensity;
         spotLight.intensity = maxSpotLightIntensity;
         KillGhostsInRange(); // Kill ghosts in flashlight range
+        flashBarImageAnimator.SetTrigger("Flash"); // Triggers the fill up animation of flashBar on screen
         StartCoroutine(DecreaseLightsIntensity(coneLightNormalIntensity, spotLightNormalIntensity));
     }
 
