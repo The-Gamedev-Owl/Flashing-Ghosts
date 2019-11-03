@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class GameOverScore : MonoBehaviour
 {
-    private ScoreManager scoreManager;
     private int score;
     private int highscore;
 
