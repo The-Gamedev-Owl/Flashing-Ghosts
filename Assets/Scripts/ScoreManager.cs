@@ -5,7 +5,7 @@ public class ScoreManager : MonoBehaviour
 {
     public DisplayScore scoreText;
 
-    private int score;
+    public int score;
 
     private void Start()
     {
