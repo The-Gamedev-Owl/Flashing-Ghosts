@@ -24,7 +24,7 @@ public class GameOverScore : MonoBehaviour
     private void DisplayScores()
     {
         var scoreText = transform.GetChild(0).GetComponent<Text>();
-        var highscoreText = transform.GetChild(2).GetComponent<Text>();
+        var highscoreText = transform.GetChild(1).GetComponent<Text>();
         scoreText.text = score.ToString();
         highscoreText.text = highscore.ToString();
     }
