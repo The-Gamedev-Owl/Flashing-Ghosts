@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AmbianceMusic : MonoBehaviour
 {
+    public bool dontDestroy;
     public float maxMusicVolume;
     public float fadeInSpeed;
 
@@ -16,6 +17,8 @@ public class AmbianceMusic : MonoBehaviour
         audioSource.volume = 0f;
         startTime = Time.time;
         StartCoroutine(FadeInMusic());
+        if (dontDestroy)
+            DontDestroyOnLoad(this);
     }
 
     private IEnumerator FadeInMusic()
