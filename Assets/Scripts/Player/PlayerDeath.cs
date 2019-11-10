@@ -51,10 +51,7 @@ public class PlayerDeath : MonoBehaviour
             isInvincible = true;
             StartCoroutine(ZoomInCameraToPlayer(maxCameraZoom)); // Zoom camera to player
             if (playerInventory.lifes > 0)
-            {
-                //// Nearest ghosts should back away to allow the player to see animation and not being touched right away
                 StartCoroutine(ScaredTimer()); // Exit "Scared" mode after 'scaredTime'
-            }
             else
             {
                 playerIsDead = true;
