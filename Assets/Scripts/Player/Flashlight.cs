@@ -142,7 +142,10 @@ public class Flashlight : MonoBehaviour
         isScared = newIsScared;
         // Stop flashing if it was
         if (flashCoroutine != null)
+        {
             StopCoroutine(flashCoroutine);
+            isFlashing = false;
+        }
     }
 
     private void RotateLights()
