@@ -8,10 +8,13 @@ public class Flashlight : MonoBehaviour
     public AudioClip flashlightSound;
     public Animator flashBarImageAnimator;
 
+    [HideInInspector]
+    public bool isFlashing;
+
     private bool isScared;
-    private bool isFlashing;
     private Rigidbody2D rigidBody;
     private AudioSource audioSource;
+    private Coroutine flashCoroutine; // Allows to stop flashing when scared
 
     /* Lights */
     public float maxConeLightIntensity;
@@ -40,7 +43,7 @@ public class Flashlight : MonoBehaviour
         if (!isScared)
         {
             if (!isFlashing && Input.GetMouseButtonDown(0))
-                StartCoroutine(Flash());
+                flashCoroutine = StartCoroutine(Flash());
             RotateLights();
         }
     }
@@ -137,6 +140,9 @@ public class Flashlight : MonoBehaviour
         else if (!newIsScared)
             lightsGO.SetActive(true);
         isScared = newIsScared;
+        // Stop flashing if it was
+        if (flashCoroutine != null)
+            StopCoroutine(flashCoroutine);
     }
 
     private void RotateLights()

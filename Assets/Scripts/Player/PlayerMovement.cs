@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody2D rb2d;
     private Animator animator;
     private GameObject lightsGO;
+    private Flashlight flash;
     private bool isIdle;
     private bool isScared;
 
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour {
         rb2d = GetComponent<Rigidbody2D> ();
         animator = GetComponent<Animator>();
         lightsGO = transform.GetChild(0).gameObject;
+        flash = GetComponent<Flashlight>();
         isIdle = false;
         isScared = false;
     }
@@ -25,7 +27,7 @@ public class PlayerMovement : MonoBehaviour {
         if (!isScared)
         {
             RotatePlayer();
-            if (!isIdle && Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+            if ((!isIdle && Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0))
             {
                 isIdle = true;
                 animator.Play(animator.GetCurrentAnimatorStateInfo(0).fullPathHash, 0, 0.3f);
