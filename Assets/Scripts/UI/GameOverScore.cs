@@ -10,6 +10,8 @@ public class GameOverScore : MonoBehaviour
 
     public void Start()
     {
+        //ResetScore(); // SHOULD BE COMMENTED
+
         var manager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
         score = manager.score;
         highscore = PlayerPrefs.GetInt("Highscore");
@@ -18,7 +20,6 @@ public class GameOverScore : MonoBehaviour
             highscore = score;
             PlayerPrefs.SetInt("Highscore", highscore);
         }
-        //ResetScore(); // SHOULD BE COMMENTED
         DisplayScores();
     }
 
