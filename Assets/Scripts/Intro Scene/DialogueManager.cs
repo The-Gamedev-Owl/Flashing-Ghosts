@@ -105,6 +105,6 @@ public class DialogueManager : MonoBehaviour
 
     public void ChangeSceneToGameplay()
     {
-        SceneManager.LoadScene("Level", LoadSceneMode.Single);
+        SceneManager.LoadScene("How To Play", LoadSceneMode.Single);
     }
 }
