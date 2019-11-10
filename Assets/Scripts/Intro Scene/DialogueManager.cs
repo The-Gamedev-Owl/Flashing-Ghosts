@@ -24,6 +24,7 @@ public class DialogueManager : MonoBehaviour
         DisplayNextDialogue();
     }
 
+    #region Sentences
     private void EnqueueSentences()
     {
         foreach (string sentence in dialogues[dialogueIndex].sentences)
@@ -41,9 +42,10 @@ public class DialogueManager : MonoBehaviour
         {
             displayedSentence = actualSentences.Dequeue();
             StopAllCoroutines();
-            Coroutine typeText = StartCoroutine(TypeText(displayedSentence));
+            StartCoroutine(TypeText(displayedSentence));
         }
     }
+    #endregion Sentences
 
     private void DisplayNextDialogue()
     {
@@ -61,6 +63,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    #region Miscellaneous
     private void PlaySound()
     {
         if (dialogues[dialogueIndex].soundToPlay != null)
@@ -80,11 +83,15 @@ public class DialogueManager : MonoBehaviour
                 characterToShow.SetActive(true);
         }
     }
+    #endregion Miscellaneous
 
+    #region TextDisplay
     private IEnumerator TypeText(string textToDisplay)
     {
         dialogueBoxText.text = "";
 
+        // If LeftClick if pressed, displays the text entirely
+        StartCoroutine(DisplayAllText(textToDisplay));
         foreach (char character in textToDisplay.ToCharArray())
         {
             dialogueBoxText.text += character;
@@ -95,8 +102,34 @@ public class DialogueManager : MonoBehaviour
             else
                 yield return new WaitForSeconds(Time.deltaTime);
         }
+        FinishTyping();
+    }
+
+    private IEnumerator DisplayAllText(string textToDisplay)
+    {
+        // Prevent from skiping text when releasing click after clicked on Continue
+        bool hasButtonDown = false;
+
+        while (true)
+        {
+            if (Input.GetMouseButtonDown(0))
+                hasButtonDown = true;
+            else if (hasButtonDown && Input.GetMouseButtonUp(0))
+            {
+                dialogueBoxText.text = textToDisplay;
+                FinishTyping();
+                break;
+            }
+            yield return null;
+        }
+    }
+
+    private void FinishTyping()
+    {
+        StopAllCoroutines();
         ShowContinueButton();
     }
+    #endregion TextDisplay
 
     private void ShowContinueButton()
     {
