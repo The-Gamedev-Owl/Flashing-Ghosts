@@ -18,7 +18,14 @@ public class GameOverScore : MonoBehaviour
             highscore = score;
             PlayerPrefs.SetInt("Highscore", highscore);
         }
+        //ResetScore(); // SHOULD BE COMMENTED
         DisplayScores();
+    }
+
+    //Should be called ONLY one time before build and commented when built
+    private void ResetScore()
+    {
+        PlayerPrefs.SetInt("Highscore", 0);
     }
 
     private void DisplayScores()
