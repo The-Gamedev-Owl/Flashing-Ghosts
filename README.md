@@ -1,5 +1,5 @@
 # Flashing-Ghosts (Finished)
-A student game project done in South Korea at Keimyung University (2019-2020)
+A student game project done in South Korea at Keimyung University (2019-2020). It was done in 2 months with 4 members in the team. We had a lot of fun making this game, so don't hesitate to give feedback or give some advice :)
 
 ## The story
 You play as Luigi and have been called by the professor E Gadd. for a really important thing !
